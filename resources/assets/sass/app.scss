@@ -27,6 +27,20 @@ body {
   background-size: $polka-space $polka-space;
 }
 
+.btn-info {
+  background-color: $primary-color;
+  border-color: $primary-color;
+}
+
+.btn-info:hover {
+  background-color: darken( $primary-color, 5% );
+  border-color: darken( $primary-color, 5% );
+}
+
+.feature-tagline {
+  margin-top: 30px;
+}
+
 #bg-panel {
   position: absolute;
   width:100%;
@@ -48,7 +62,13 @@ body {
 }
 
 .nav-main {
-  word-spacing: 20px;
+  //word-spacing: 20px;
+  a {
+    display: inline-block;
+    padding: 5px;
+    border: solid 1px #333333;
+    color: #333333;
+  }
 }
 
 .thumbnail {
@@ -66,4 +86,24 @@ body {
   display: block;
   max-width: 100%;
   height: auto;
+}
+
+.card-bg {
+  background-size:cover;
+}
+
+.card {
+  text-align: center;
+  color:white;
+  background: rgba(255, 255, 255, 0.5);
+
+  h2 {
+    text-shadow: 1px 1px 5px rgba(0,0,0, 1);
+    margin: 5px auto;
+    padding-top: 120px;
+    padding-bottom: 20px;
+  }
+  .card-btn {
+    margin-top: 40px;
+  }
 }

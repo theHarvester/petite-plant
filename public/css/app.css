@@ -5741,6 +5741,17 @@ body {
   background-position: 0 0, 160px 160px;
   background-size: 80px 80px; }
 
+.btn-info {
+  background-color: #A88AF1;
+  border-color: #A88AF1; }
+
+.btn-info:hover {
+  background-color: #9773ee;
+  border-color: #9773ee; }
+
+.feature-tagline {
+  margin-top: 20px; }
+
 #bg-panel {
   position: absolute;
   width: 100%;
@@ -5758,8 +5769,11 @@ body {
   padding-top: 20px;
   padding-bottom: 20px; }
 
-.nav-main {
-  word-spacing: 20px; }
+.nav-main a {
+  display: inline-block;
+  padding: 5px;
+  border: solid 1px #333333;
+  color: #333333; }
 
 .thumbnail {
   width: 200px;
@@ -5774,5 +5788,20 @@ body {
   display: block;
   max-width: 100%;
   height: auto; }
+
+.card-bg {
+  background-size: cover; }
+
+.card {
+  text-align: center;
+  color: white;
+  background: rgba(255, 255, 255, 0.5); }
+  .card h2 {
+    text-shadow: 1px 1px 5px black;
+    margin: 5px auto;
+    padding-top: 120px;
+    padding-bottom: 20px; }
+  .card .card-btn {
+    margin-top: 40px; }
 
 /*# sourceMappingURL=app.css.map */

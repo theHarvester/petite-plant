@@ -39,6 +39,24 @@ Route::get('/', function () {
     return view('welcome', ['allAricles' => $allArticles]);
 });
 
+Route::get('gallery', function () {
+    return view('pages.gallery', ['title' => 'Gallery']);
+});
+
+Route::get('workshops', function () {
+    return view('pages.workshops', [
+        'title' => 'Workshops',
+        'content' => (new Parsedown())->parse(\Cache::get('workshop_content')),
+    ]);
+});
+
+Route::get('about', function () {
+    return view('pages.about', [
+        'title' => 'About',
+        'content' => (new Parsedown())->parse(\Cache::get('about_content')),
+    ]);
+});
+
 Route::get('images/list', ['as' => 'list-images', $getImages]);
 
 Route::get('uploads/img/{filename}', function ($filename) {
@@ -105,6 +123,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () use ($ge
         return view('admin.dashboard', [
             'drafts' => $drafts,
             'published' => $published,
+            'title' => 'Admin Dashboard'
         ]);
     }]);
 
@@ -112,9 +131,40 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () use ($ge
         return view('admin.draft', array_merge($getImages(), ['article' => []]));
     }]);
 
+    Route::get('about/edit', ['as' => 'edit-about', function () {
+        return view('admin.edit', [
+            'title' => 'About Content',
+            'content' => \Cache::get('about_content', ''),
+            'submitTo' => 'admin/about/save',
+        ]);
+    }]);
+
+    Route::get('workshop/edit', ['as' => 'edit-workshop', function () {
+        return view('admin.edit', [
+            'title' => 'Workshop Content',
+            'content' => \Cache::get('workshop_content', ''),
+            'submitTo' => 'admin/workshop/save',
+        ]);
+    }]);
+
     Route::get('drafts/edit/{id}', ['as' => 'edit-draft', function ($id) use ($getImages) {
         return view('admin.draft', array_merge($getImages(), ['article' => Article::findOrFail($id)->toArray()]));
     }]);
+
+    Route::get('push/static', ['as' => 'push-static', function () {
+        \Artisan::call('push:static');
+        return redirect('admin');
+    }]);
+
+    Route::post('about/save', function (Request $request) {
+        \Cache::forever('about_content', $request->get('content'));
+        return redirect('admin');
+    });
+
+    Route::post('workshop/save', function (Request $request) {
+        \Cache::forever('workshop_content', $request->get('content'));
+        return redirect('admin');
+    });
 
     Route::post('drafts/save', function (Request $request) {
         $article = new Article();
