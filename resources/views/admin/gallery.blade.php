@@ -2,25 +2,6 @@
 
 @section('head')
     <style type="text/css">
-        #lightbox .modal-content {
-            display: inline-block;
-            text-align: center;
-        }
-
-        #lightbox .close {
-            opacity: 1;
-            color: rgb(255, 255, 255);
-            background-color: rgb(25, 25, 25);
-            padding: 5px 8px;
-            border-radius: 30px;
-            border: 2px solid rgb(255, 255, 255);
-            position: absolute;
-            top: -15px;
-            right: -55px;
-
-            z-index: 1032;
-        }
-
         .img-lightbox {
             -webkit-transition: opacity 0.3s; /* Safari */
             transition: opacity 0.3s;

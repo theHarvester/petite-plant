@@ -39,6 +39,7 @@
     <link rel="stylesheet" type="text/css" href="/css/app.css">
     <link href='https://fonts.googleapis.com/css?family=Josefin+Sans|Droid+Sans|Amatic+SC|Rye' rel='stylesheet'
           type='text/css'>
+    @yield('head')
 </head>
 <body>
 <div id="bg-panel">&nbsp;</div>

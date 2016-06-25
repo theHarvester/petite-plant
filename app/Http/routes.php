@@ -31,6 +31,22 @@ $getImages = function () {
     return ['images' => array_reverse($filepaths)];
 };
 
+$getGalleryImages = function () {
+    $filepaths = array_filter(Storage::files('gallery'), function ($file) {
+        return (
+            ends_with($file, '.jpeg')
+            || ends_with($file, '.jpg')
+            || ends_with($file, '.png')
+        );
+    });
+
+    $filepaths = array_map(function ($path) {
+        return str_replace('gallery', '/gallery/img', $path);
+    }, $filepaths);
+
+    return array_reverse($filepaths);
+};
+
 Route::get('/', function () {
     $allArticles = Article::whereNotNull('published_at')
         ->where('published_at', '<', new DateTime())
@@ -39,8 +55,8 @@ Route::get('/', function () {
     return view('welcome', ['allAricles' => $allArticles]);
 });
 
-Route::get('gallery', function () {
-    return view('pages.gallery', ['title' => 'Gallery']);
+Route::get('gallery', function () use($getGalleryImages) {
+    return view('pages.gallery', ['title' => 'Gallery', 'images' => $getGalleryImages()]);
 });
 
 Route::get('workshops', function () {
@@ -65,6 +81,16 @@ Route::get('uploads/img/{filename}', function ($filename) {
     }
 
     $fileContents = \Storage::get('public/' . $filename);
+
+    return response($fileContents, 200, ['Content-Type' => ends_with($filename, '.png') ? 'image/png' : 'image/jpeg']);
+});
+
+Route::get('gallery/img/{filename}', function ($filename) {
+    if (!\Storage::exists('gallery/' . $filename)) {
+        return response("File does not exist.", 404);
+    }
+
+    $fileContents = \Storage::get('gallery/' . $filename);
 
     return response($fileContents, 200, ['Content-Type' => ends_with($filename, '.png') ? 'image/png' : 'image/jpeg']);
 });
@@ -108,7 +134,7 @@ Route::post('login', ['before' => 'csrf', function (Request $request) {
     abort(404);
 }]);
 
-Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () use ($getImages) {
+Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () use ($getImages, $getGalleryImages) {
     Route::get('/', ['as' => 'admin-panel', function () {
 
         $drafts = Article::whereNull('published_at')
@@ -128,7 +154,19 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () use ($ge
     }]);
 
     Route::get('drafts/new', ['as' => 'new-draft', function () use ($getImages) {
-        return view('admin.draft', array_merge($getImages(), ['article' => []]));
+        return view('admin.draft', array_merge($getImages(), ['article' => [], 'title' => 'New Draft']));
+    }]);
+
+    Route::get('gallery/manage', ['as' => 'manage-gallery', function () use ($getGalleryImages) {
+        return view('admin.gallery', ['title' => 'Manage Gallery', 'images' => $getGalleryImages()]);
+    }]);
+
+    Route::get('gallery/edit', ['as' => 'edit-gallery', function () {
+        return view('admin.edit', [
+            'title' => 'Gallery Content',
+            'content' => \Cache::get('gallery_content', ''),
+            'submitTo' => 'admin/gallery/save',
+        ]);
     }]);
 
     Route::get('about/edit', ['as' => 'edit-about', function () {
@@ -158,6 +196,11 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () use ($ge
 
     Route::post('about/save', function (Request $request) {
         \Cache::forever('about_content', $request->get('content'));
+        return redirect('admin');
+    });
+
+    Route::post('gallery/save', function (Request $request) {
+        \Cache::forever('gallery_content', $request->get('content'));
         return redirect('admin');
     });
 
@@ -198,6 +241,16 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () use ($ge
             $dt = new DateTime();
             $key = $dt->format('Y-m-d-H-i-s-') . str_random('5');
             Storage::put('public/' . $key . ($file->getMimeType() == 'image/png' ? '.png' : '.jpg'), file_get_contents($file->getRealPath()));
+        }
+        return ['success' => true];
+    }]);
+
+    Route::post('images/gallery/save', ['as' => 'save-gallery-image', function (\Illuminate\Http\Request $request) {
+        /** @var UploadedFile $file */
+        foreach ($request->allFiles() as $file) {
+            $dt = new DateTime();
+            $key = $dt->format('Y-m-d-H-i-s-') . str_random('5');
+            Storage::put('gallery/' . $key . ($file->getMimeType() == 'image/png' ? '.png' : '.jpg'), file_get_contents($file->getRealPath()));
         }
         return ['success' => true];
     }]);
