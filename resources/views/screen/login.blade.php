@@ -4,7 +4,7 @@
     <div class="row row-pad">
         <div class="col-lg-2 col-lg-offset-5">
             {!! Form::open(['url' => 'login', 'method' => 'post']) !!}
-            {{Form::text('email', 'example@gmail.com')}}
+            {{Form::text('email')}}
             {{Form::password('password')}}
             {{Form::token()}}
             {{Form::submit('Login')}}

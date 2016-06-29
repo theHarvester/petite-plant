@@ -71,7 +71,7 @@ class UploadStaticSite extends Command
 
             $s3->getDriver()->put(
                 $this->removePrefix($path, $localBasePath),
-                str_replace('localhost:8000', '', $local->get($path)),
+                str_replace('localhost:8000', 'petiteplant.com', $local->get($path)),
                 [
                     'visibility' => 'public',
                     'ContentType' => $file_mime

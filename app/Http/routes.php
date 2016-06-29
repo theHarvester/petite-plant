@@ -41,7 +41,7 @@ $getGalleryImages = function () {
     });
 
     $filepaths = array_map(function ($path) {
-        return str_replace('gallery', '/gallery/img', $path);
+        return str_replace('gallery', '/img/gallery', $path);
     }, $filepaths);
 
     return array_reverse($filepaths);
@@ -85,7 +85,7 @@ Route::get('uploads/img/{filename}', function ($filename) {
     return response($fileContents, 200, ['Content-Type' => ends_with($filename, '.png') ? 'image/png' : 'image/jpeg']);
 });
 
-Route::get('gallery/img/{filename}', function ($filename) {
+Route::get('img/gallery/{filename}', function ($filename) {
     if (!\Storage::exists('gallery/' . $filename)) {
         return response("File does not exist.", 404);
     }
@@ -131,7 +131,7 @@ Route::post('login', ['before' => 'csrf', function (Request $request) {
         return redirect()->route('admin-panel');
     }
 
-    abort(404);
+    return redirect('');
 }]);
 
 Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () use ($getImages, $getGalleryImages) {
