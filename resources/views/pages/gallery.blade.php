@@ -34,9 +34,9 @@
 
 @section('main-content')
     @foreach(array_chunk($images, 4) as $imageSet)
-        <div class="row">
+        <div class="row row-pad">
             @foreach($imageSet as $image)
-                <div class="col-lg-3">
+                <div class="col-sm-3">
                     <img src="{{ $image }}" class="img-responsive img-lightbox" data-toggle="modal"
                          data-target="#lightbox">
                 </div>

@@ -52,16 +52,21 @@ Route::get('/', function () {
         ->where('published_at', '<', new DateTime())
         ->get();
 
-    return view('welcome', ['allAricles' => $allArticles]);
+    return view('welcome', ['allAricles' => $allArticles, 'page' => 'home']);
 });
 
 Route::get('gallery', function () use($getGalleryImages) {
-    return view('pages.gallery', ['title' => 'Gallery', 'images' => $getGalleryImages()]);
+    return view('pages.gallery', [
+        'title' => 'Gallery',
+        'images' => $getGalleryImages(),
+        'page' => 'gallery',
+    ]);
 });
 
 Route::get('workshops', function () {
     return view('pages.workshops', [
         'title' => 'Workshops',
+        'page' => 'workshops',
         'content' => (new Parsedown())->parse(\Cache::get('workshop_content')),
     ]);
 });
@@ -69,6 +74,7 @@ Route::get('workshops', function () {
 Route::get('about', function () {
     return view('pages.about', [
         'title' => 'About',
+        'page' => 'about',
         'content' => (new Parsedown())->parse(\Cache::get('about_content')),
     ]);
 });

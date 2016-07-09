@@ -5734,12 +5734,22 @@ button.close {
     display: none !important; } }
 
 .logo {
-  font-family: 'Josefin Sans', sans-serif; }
+  font-family: 'Josefin Sans', sans-serif;
+  color: #a98af2; }
 
 body {
+  line-height: 1.7;
   background: -webkit-radial-gradient(#A88AF1 15%, transparent 16%), -webkit-radial-gradient(#A88AF1 15%, transparent 16%), white;
   background-position: 0 0, 160px 160px;
   background-size: 80px 80px; }
+
+h3 {
+  padding-bottom: 20px;
+  color: #a98af2; }
+
+.pad-sides {
+  padding-left: 30px;
+  padding-right: 30px; }
 
 .btn-info {
   background-color: #A88AF1;
@@ -5750,7 +5760,7 @@ body {
   border-color: #9773ee; }
 
 .feature-tagline {
-  margin-top: 20px; }
+  margin-top: 30px; }
 
 #bg-panel {
   position: absolute;
@@ -5769,11 +5779,21 @@ body {
   padding-top: 20px;
   padding-bottom: 20px; }
 
-.nav-main a {
-  display: inline-block;
-  padding: 5px;
-  border: solid 1px #333333;
-  color: #333333; }
+.nav-main {
+  padding-top: 0; }
+  .nav-main a {
+    display: inline-block;
+    padding: 5px 10px;
+    border-top: solid 2px #32d0a0;
+    color: #333333;
+    margin-right: 5px; }
+    .nav-main a.selected {
+      color: white;
+      background-color: #32d0a0; }
+    .nav-main a:hover {
+      color: white;
+      background-color: #5bdab3;
+      text-decoration: none; }
 
 .thumbnail {
   width: 200px;
@@ -5796,12 +5816,7 @@ body {
   text-align: center;
   color: white;
   background: rgba(255, 255, 255, 0.5); }
-  .card h2 {
-    text-shadow: 1px 1px 5px black;
-    margin: 5px auto;
-    padding-top: 120px;
-    padding-bottom: 20px; }
   .card .card-btn {
-    margin-top: 40px; }
+    margin: 180px auto 5px auto; }
 
 /*# sourceMappingURL=app.css.map */

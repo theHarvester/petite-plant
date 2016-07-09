@@ -5,6 +5,7 @@ $font-family-sans-serif: 'Droid Sans', sans-serif;
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
 $primary-color: #A88AF1;
+$accent-color: #32d0a0;
 $bg-white: white;
 
 $polka-dot-bg: $bg-white;
@@ -15,9 +16,11 @@ $polka-half-space:160px;
 
 .logo {
   font-family: 'Josefin Sans', sans-serif;
+  color: #a98af2;
 }
 
 body {
+  line-height: 1.7;
   background: -moz-radial-gradient($polka-dot 15%, transparent 16%), -moz-radial-gradient($polka-dot 15%, transparent 16%), $polka-dot-bg;
   background: -webkit-radial-gradient($polka-dot 15%, transparent 16%), -webkit-radial-gradient($polka-dot 15%, transparent 16%), $polka-dot-bg;
   background-position: 0 0, $polka-half-space $polka-half-space;
@@ -25,6 +28,17 @@ body {
   -webkit-background-size: $polka-space $polka-space;
   -moz-background-size: $polka-space $polka-space;
   background-size: $polka-space $polka-space;
+}
+
+h3 {
+  padding-bottom: 20px;
+  color: #a98af2;
+}
+
+.pad-sides {
+  padding-left: 30px;
+  padding-right: 30px;
+
 }
 
 .btn-info {
@@ -62,12 +76,22 @@ body {
 }
 
 .nav-main {
-  //word-spacing: 20px;
+  padding-top: 0;
   a {
     display: inline-block;
-    padding: 5px;
-    border: solid 1px #333333;
+    padding: 5px 10px;
+    border-top: solid 2px $accent-color;
     color: #333333;
+    margin-right: 5px;
+    &.selected {
+      color: white;
+      background-color: $accent-color;
+    }
+    &:hover {
+      color: white;
+      background-color: lighten($accent-color, 10%);
+      text-decoration: none;
+    }
   }
 }
 
@@ -97,13 +121,7 @@ body {
   color:white;
   background: rgba(255, 255, 255, 0.5);
 
-  h2 {
-    text-shadow: 1px 1px 5px rgba(0,0,0, 1);
-    margin: 5px auto;
-    padding-top: 120px;
-    padding-bottom: 20px;
-  }
   .card-btn {
-    margin-top: 40px;
+    margin: 180px auto 5px auto;
   }
 }

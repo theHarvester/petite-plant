@@ -2,16 +2,16 @@
 
 @section('main-content')
     <div class="row row-pad">
-        <div class="col-lg-8">
+        <div class="col-md-8">
             <img src="img/hero3.jpg" class="img-responsive" style="background-color: rgba(0,0,0,0.5)">
         </div>
 
-        <div class="col-lg-4 feature-tagline" style="text-align: center">
+        <div class="col-md-4 feature-tagline" style="text-align: center">
             <p style="font-family: 'Amatic SC', cursive; font-size: 3em">Cute plants</p>
 
             <p style="font-family: 'Amatic SC', cursive; font-size: 2em">- for -</p>
 
-            <p style="font-family: 'Rye', cursive; font-size: 2.5em;">SMALL&nbsp;PLACES</p>
+            <p style="font-family: 'Rye', cursive; font-size: 2.5em;">SMALL&nbsp;SPACES</p>
 
             <form method="POST" class="em_wfe_form" id="" name=""
                   action="http://www.vision6.com.au/em/forms/subscribe.php?db=364457&s=97991&a=59665&k=ff345a4&va=5"
@@ -39,27 +39,24 @@
         </div>
     </div>
     <div class="row row-pad">
-        <div class="col-lg-4 img-responsive">
+        <div class="col-md-4 img-responsive">
             <div class="card-bg" style="background-image: url(img/1.jpg);">
                 <div class="card">
-                    <h2>Gallery</h2>
-                    {{ link_to('/gallery', 'View Gallery', ['class' => 'btn btn-info card-btn']) }}
+                    {{ link_to('/gallery', 'View Gallery', ['class' => 'btn btn-info card-btn btn-lg']) }}
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 img-responsive">
+        <div class="col-md-4 img-responsive">
             <div class="card-bg" style="background-image: url(img/6.jpg);">
                 <div class="card">
-                    <h2>Workshops</h2>
-                    {{ link_to('/workshops', 'Learn More', ['class' => 'btn btn-info card-btn']) }}
+                    {{ link_to('/workshops', 'Workshops', ['class' => 'btn btn-info card-btn btn-lg']) }}
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 img-responsive">
+        <div class="col-md-4 img-responsive">
             <div class="card-bg" style="background-image: url(img/3.jpg);">
                 <div class="card">
-                    <h2>About</h2>
-                    {{ link_to('/about', 'Learn More', ['class' => 'btn btn-info card-btn']) }}
+                    {{ link_to('/about', 'About', ['class' => 'btn btn-info card-btn btn-lg']) }}
                 </div>
             </div>
         </div>

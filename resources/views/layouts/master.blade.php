@@ -53,16 +53,16 @@
     </div>
     <div class="container" id="main-content">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 text-right nav-main row-pad pull-right">
+                {{ link_to('/', 'Home', ['class' => (isset($page) && $page == 'home') ? 'selected' : null]) }}
+                {{ link_to('/gallery', 'Gallery', ['class' => (isset($page) && $page == 'gallery') ? 'selected' : null]) }}
+                {{ link_to('/workshops', 'Workshops', ['class' => (isset($page) && $page == 'workshops') ? 'selected' : null]) }}
+                {{ link_to('/about', 'About', ['class' => (isset($page) && $page == 'about') ? 'selected' : null]) }}
+            </div>
+            <div class="col-md-6 pull-left">
                 {!! isset($title) ? '<h1>' . $title . '</h1>' : '' !!}
             </div>
-            <div class="col-md-6 text-right nav-main row-pad">
-                {{ link_to('/', 'Home') }}
-                {{ link_to('/gallery', 'Gallery') }}
-                {{ link_to('/workshops', 'Workshops') }}
-                {{ link_to('/about', 'About') }}
-            </div>
-            <hr/>
+            {{--<hr/>--}}
         </div>
         @yield('main-content')
     </div>
