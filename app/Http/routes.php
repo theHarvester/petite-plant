@@ -51,11 +51,10 @@ Route::get('/', function () {
     $allArticles = Article::whereNotNull('published_at')
         ->where('published_at', '<', new DateTime())
         ->get();
-
     return view('welcome', ['allAricles' => $allArticles, 'page' => 'home']);
 });
 
-Route::get('gallery', function () use($getGalleryImages) {
+Route::get('gallery', function () use ($getGalleryImages) {
     return view('pages.gallery', [
         'title' => 'Gallery',
         'images' => $getGalleryImages(),
@@ -76,6 +75,24 @@ Route::get('about', function () {
         'title' => 'About',
         'page' => 'about',
         'content' => (new Parsedown())->parse(\Cache::get('about_content')),
+    ]);
+});
+
+Route::get('blog', function () {
+    $allArticles = Article::whereNotNull('published_at')
+        ->where('published_at', '<', new DateTime())
+        ->get()
+        ->toArray();
+
+    $allArticles = array_map(function ($article) {
+        $article['content'] = (new Parsedown)->parse($article['content']);
+        return $article;
+    }, $allArticles);
+
+    return view('pages.blog', [
+        'title' => 'Blog',
+        'allArticles' => $allArticles,
+        'page' => 'blog',
     ]);
 });
 

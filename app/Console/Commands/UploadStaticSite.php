@@ -48,6 +48,8 @@ class UploadStaticSite extends Command
     {
         $dir = storage_path('app/static');
         \File::cleanDirectory($dir);
+        shell_exec('cd ' . app_path('../') . ' && git pull');
+        shell_exec('cd ' . app_path('../') . ' && npm run prod');
         shell_exec('wget --recursive -p -k -P ' . $dir . ' http://localhost:8000/');
 
         /** @var \Illuminate\Filesystem\FilesystemAdapter $local */

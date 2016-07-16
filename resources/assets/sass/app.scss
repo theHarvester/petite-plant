@@ -75,6 +75,13 @@ h3 {
   padding-bottom: 20px;
 }
 
+a {
+  color: $accent-color;
+  &:hover {
+    color: lighten($accent-color, 10%);
+  }
+}
+
 .nav-main {
   padding-top: 0;
   a {
