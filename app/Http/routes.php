@@ -141,23 +141,14 @@ Route::get('article/{slug}', function ($slug) {
         ->where('published_at', '<', new DateTime())
         ->get();
 
-    return view('article', array_merge($tmp, ['allArticles' => $allArticles]));
+    return view('article', array_merge($tmp, ['allArticles' => $allArticles, 'page' => 'blog']));
 });
 
 Route::get('login', function () {
-    return view('screen.login');
+    return redirect()->route('admin-panel');
 });
 
-Route::post('login', ['before' => 'csrf', function (Request $request) {
-    if (Auth::attempt(['email' => $request->get('email'), 'password' => $request->get('password')])) {
-        // Authentication passed...
-        return redirect()->route('admin-panel');
-    }
-
-    return redirect('');
-}]);
-
-Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () use ($getImages, $getGalleryImages) {
+Route::group(['prefix' => 'admin'], function () use ($getImages, $getGalleryImages) {
     Route::get('/', ['as' => 'admin-panel', function () {
 
         $drafts = Article::whereNull('published_at')
@@ -242,6 +233,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () use ($ge
 
         $article->slug = $request->get('slug');
         $article->title = $request->get('title');
+        $article->summary = $request->get('summary');
         $article->content = $request->get('content');
         $article->thumbnail = $request->get('thumbnail');
         $article->published_at = $request->get('is_published') ? $publishedAt : null;
@@ -261,9 +253,11 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () use ($ge
     Route::post('images/save', ['as' => 'save-image', function (\Illuminate\Http\Request $request) {
         /** @var UploadedFile $file */
         foreach ($request->allFiles() as $file) {
+            $filepath = $file->getRealPath();
             $dt = new DateTime();
             $key = $dt->format('Y-m-d-H-i-s-') . str_random('5');
-            Storage::put('public/' . $key . ($file->getMimeType() == 'image/png' ? '.png' : '.jpg'), file_get_contents($file->getRealPath()));
+            shell_exec('sips -Z 1024 ' . $filepath);
+            Storage::put('public/' . $key . ($file->getMimeType() == 'image/png' ? '.png' : '.jpg'), file_get_contents($filepath));
         }
         return ['success' => true];
     }]);

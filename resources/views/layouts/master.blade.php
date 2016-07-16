@@ -55,8 +55,9 @@
         <div class="row">
             <div class="col-md-6 text-right nav-main row-pad pull-right">
                 {{ link_to('/', 'Home', ['class' => (isset($page) && $page == 'home') ? 'selected' : null]) }}
-                {{ link_to('/gallery', 'Gallery', ['class' => (isset($page) && $page == 'gallery') ? 'selected' : null]) }}
+                {{ link_to('/blog', 'Blog', ['class' => (isset($page) && $page == 'blog') ? 'selected' : null]) }}
                 {{ link_to('/workshops', 'Workshops', ['class' => (isset($page) && $page == 'workshops') ? 'selected' : null]) }}
+                {{ link_to('/gallery', 'Gallery', ['class' => (isset($page) && $page == 'gallery') ? 'selected' : null]) }}
                 {{ link_to('/about', 'About', ['class' => (isset($page) && $page == 'about') ? 'selected' : null]) }}
             </div>
             <div class="col-md-6 pull-left">
@@ -65,12 +66,56 @@
             {{--<hr/>--}}
         </div>
         @yield('main-content')
+        {{--<section id="footer">--}}
+            {{--<div class="row row-pad">--}}
+                {{--<div class="col-md-4">--}}
+                    {{--<h3>Contact Us</h3>--}}
+
+                    {{--<p>Foo bar</p>--}}
+                {{--</div>--}}
+                {{--<div class="col-md-4">--}}
+                    {{--<h3>Follow Us</h3>--}}
+
+                    {{--<p>Foo bar</p>--}}
+                {{--</div>--}}
+                {{--<div class="col-md-4">--}}
+                    {{--<h3>Keep In Touch</h3>--}}
+
+                    {{--<p>Foo bar</p>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</section>--}}
     </div>
 </section>
 <section id="footer">
     <div class="container">
         <div class="row row-pad">
-            &nbsp;
+            <div class="col-md-4">
+                <h3>Contact Us</h3>
+
+                <p>Email: <a href="mailto:hello@petiteplant.com">hello@petiteplant.com</a></p>
+            </div>
+            <div class="col-md-4">
+                <h3>Follow Us</h3>
+
+                <div>
+                    <a href="https://www.instagram.com/petiteplant">
+                        <img src="/img/social/instagram.png" alt="Petiteplant on Instagram">
+                    </a>
+                    <a href="https://www.facebook.com/petiteplant">
+                        <img src="/img/social/facebook.png" alt="Petiteplant on Facebook">
+                    </a>
+                    <a href="https://www.twitter.com/petiteplant">
+                        <img src="/img/social/twitter.png" alt="Petiteplant on Twitter">
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h3>Keep In Touch</h3>
+                <div>
+                    @include('shared/newsletter')
+                </div>
+            </div>
         </div>
     </div>
 </section>

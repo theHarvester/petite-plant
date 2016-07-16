@@ -22,6 +22,9 @@
             {{Form::label('thumbnail', 'Thumbnail URL')}}
             {{Form::text('thumbnail', array_get($article, 'thumbnail'), ['class' => 'form-control'])}}
 
+            {{Form::label('summary', 'Article Summary')}}
+            {{Form::textarea('summary', array_get($article, 'summary'), ['class' => 'form-control'])}}
+
             {{Form::label('content', 'Article Content')}}
             {{Form::textarea('content', array_get($article, 'content'), ['class' => 'form-control', 'id' => 'draft-content'])}}
 
