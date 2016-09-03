@@ -236,6 +236,7 @@ Route::group(['prefix' => 'admin'], function () use ($getImages, $getGalleryImag
         $article->summary = $request->get('summary');
         $article->content = $request->get('content');
         $article->thumbnail = $request->get('thumbnail');
+        $article->tags = $request->get('tags');
         $article->published_at = $request->get('is_published') ? $publishedAt : null;
 
         $article->save();

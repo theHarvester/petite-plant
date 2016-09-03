@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('head')
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.css" />
+@endsection
+
 @section('main-content')
     <div class="row row-pad">
         <div class="col-lg-6">
@@ -13,8 +17,11 @@
             </div>
 
             {!! Form::open(['url' => 'admin/drafts/save', 'method' => 'post']) !!}
+            <div class="row-pad">
+                {{Form::submit('Save', ['class' => 'btn btn-default'])}}
+            </div>
             {{Form::label('title', 'Title')}}
-            {{Form::text('title', array_get($article, 'title'), ['class' => 'form-control'])}}
+            {{Form::text('title', array_get($article, 'title'), ['class' => 'form-control', 'id' => 'draft-title-input'])}}
 
             {{Form::label('slug', 'Slug')}}
             {{Form::text('slug', array_get($article, 'slug', 'my-slug-here'), ['class' => 'form-control'])}}
@@ -23,24 +30,32 @@
             {{Form::text('thumbnail', array_get($article, 'thumbnail'), ['class' => 'form-control'])}}
 
             {{Form::label('summary', 'Article Summary')}}
-            {{Form::textarea('summary', array_get($article, 'summary'), ['class' => 'form-control'])}}
+            {{Form::textarea('summary', array_get($article, 'summary'), ['class' => 'form-control', 'id' => 'article-summary', 'rows' => 2])}}
 
-            {{Form::label('content', 'Article Content')}}
-            {{Form::textarea('content', array_get($article, 'content'), ['class' => 'form-control', 'id' => 'draft-content'])}}
 
             {{Form::label('published_at', 'Published date? (set to future to schedule it)')}}
             {{Form::date('published_at', (new DateTime(array_get($article, 'published_at', null))), ['class' => 'form-control'])}}
 
+            <div class="form-group">
+                <label class="control-label">Tags</label>
+                <div class="">
+                    <input type="text" name="tags" class="form-control"
+                           value="{{ array_get($article, 'tags') }}" data-role="tagsinput" />
+                </div>
+            </div>
+
             {{Form::label('is_published', 'Ready to publish?')}}
             {{Form::checkbox('is_published', 'is_published', !!array_get($article, 'published_at', false))}}
+
+            {{Form::label('content', 'Article Content')}}
+            {{Form::textarea('content', array_get($article, 'content'), ['class' => 'form-control', 'id' => 'draft-content', 'rows' => 3])}}
+
             {{Form::hidden('article_id', array_get($article, 'id'))}}
             {{Form::token()}}
-            <div class="row-pad">
-                {{Form::submit('Save', ['class' => 'btn btn-default'])}}
-            </div>
             {!! Form::close() !!}
         </div>
         <div class="col-lg-6">
+            <h1 id="draft-title"></h1>
             <div id="draft-preview" class="imgs-responsive"></div>
         </div>
 
@@ -125,12 +140,19 @@
 @endsection
 
 @section('js')
+    <script src="//cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.ns-autogrow/1.1.4/jquery.ns-autogrow.min.js"></script>
     <script src="/js/dmuploader.min.js"></script>
     <script type="application/javascript">
         $(document).ready(function () {
             // Draft rendering
             var textArea = $("textarea#draft-content");
             var preview = $("#draft-preview");
+            var draftTitleInput = $("#draft-title-input");
+            var draftTitle = $("#draft-title");
+
+            textArea.autogrow();
+            $('#article-summary').autogrow();
 
             setInterval(function () {
                 $.post("/admin/drafts/render", {
@@ -139,6 +161,10 @@
                 }, function (data) {
                     preview.html(data.result);
                 });
+            }, 4000);
+
+            setInterval(function () {
+                draftTitle.text(draftTitleInput.val());
             }, 4000);
 
             var imgCode = $('#img-code');

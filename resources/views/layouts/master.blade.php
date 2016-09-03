@@ -34,6 +34,7 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="msapplication-TileImage" content="/favicons/mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
+    <meta name="google-site-verification" content="mInCGzp_j4FhiegcNw6SNdEI6m6JHemNg7U16qElpAY" />
 
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css">
     <link rel="stylesheet" type="text/css" href="/css/app.css">
